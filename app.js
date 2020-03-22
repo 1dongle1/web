@@ -4,6 +4,7 @@ const app = express()
 const port = 3000
 app.use(express.json())
 
+//getAll
 app.get('/accounts', (req, res) => fs.readFile('./data.json','utf-8',(err, data )=>{
     if (err) {
         res.status(500).send()
@@ -41,6 +42,7 @@ const asyncWriteFile =function (string,path){
     })
 
 }
+//post Todo列表
 const createAccount = async (req,res) =>{
     const newAccount =req.body
     const file = await asyncReadFile('./data.json') 
@@ -56,8 +58,10 @@ const createAccount = async (req,res) =>{
     }
 
 }
-
 app.post('/accounts', createAccount)
+
+
+//delete 一个用户
 app.delete('/del/:id',async (req,res)=>{
     // console.log(req.params.id)
     // console.log(req)
@@ -76,6 +80,8 @@ app.delete('/del/:id',async (req,res)=>{
     }
     
 })
+
+//get一个用户的所有参数
 app.get('/getid/:id',async (req,res)=>{
     const file = await asyncReadFile('./data.json') 
     const account = JSON.parse(file)
